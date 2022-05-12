@@ -1,6 +1,7 @@
 <script>
   import Product from "./Product.svelte";
   import Button from "./Button.svelte";
+  import Cart from  "./Cart.svelte"
 
   let title = "";
   let price = 0;
@@ -31,6 +32,13 @@
     console.log(cartItems);
   }
 </script>
+
+<section>
+  <Cart items={cartItems}/>
+</section>
+
+
+<hr>
 
 <section>
   <div>
