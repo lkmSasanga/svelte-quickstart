@@ -1,5 +1,6 @@
 <script>
   import Product from "./Product.svelte";
+  import Button from './Button.svelte'
 
   let title = "";
   let price = 0;
@@ -10,8 +11,6 @@
   }
 </script>
 
-<p>{title}</p>
-
 <section>
   <div>
     <label for="title">Title</label>
@@ -19,15 +18,21 @@
   </div>
   <div>
     <label for="price">Price</label>
-    <input type="number" id="price" />
+    <input type="number" id="price" bind:value={price} />
   </div>
   <div>
     <label for="description">Description</label>
-    <input rows="3" id="description" />
+    <input rows="3" id="description" bind:value={description} />
   </div>
+
+  <Button>Create product</Button>
 </section>
 
-<Product />
+<Product
+  productTitle={title}
+  productPrice={price}
+  productDescription={description}
+/>
 
 <style>
   section {
