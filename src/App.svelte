@@ -7,6 +7,7 @@
   let description = "";
 
   let products = [];
+  let cartItems = [];
 
   function setTitle(event) {
     title = event.target.value;
@@ -18,7 +19,16 @@
       price: price,
       description: description,
     };
-    products = products.concat(newProduct)
+    products = products.concat(newProduct);
+  }
+
+  function addToCart(event) {
+    const selectedTitle = event.detail;
+
+    cartItems = cartItems.concat({
+      ...products.find((prod) => prod.title === selectedTitle),
+    });
+    console.log(cartItems);
   }
 </script>
 
@@ -38,17 +48,21 @@
 
   <Button on:click={createProduct}>Create product</Button>
 </section>
-{#if products.length === 0}
-  <p>No products were added yet!</p>
-{:else}
-  {#each products as product}
-    <Product
-      productTitle={product.title}
-      productPrice={product.price}
-      productDescription={product.description}
-    />
-  {/each}
-{/if}
+
+<section>
+  {#if products.length === 0}
+    <p>No products were added yet!</p>
+  {:else}
+    {#each products as product}
+      <Product
+        productTitle={product.title}
+        productPrice={product.price}
+        productDescription={product.description}
+        on:addcart={addToCart}
+      />
+    {/each}
+  {/if}
+</section>
 
 <style>
   section {
