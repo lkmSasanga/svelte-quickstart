@@ -1,13 +1,24 @@
 <script>
   import Product from "./Product.svelte";
-  import Button from './Button.svelte'
+  import Button from "./Button.svelte";
 
   let title = "";
   let price = 0;
   let description = "";
 
+  let products = [];
+
   function setTitle(event) {
     title = event.target.value;
+  }
+
+  function createProduct() {
+    const newProduct = {
+      title: title,
+      price: price,
+      description: description,
+    };
+    products = products.concat(newProduct)
   }
 </script>
 
@@ -25,14 +36,19 @@
     <input rows="3" id="description" bind:value={description} />
   </div>
 
-  <Button>Create product</Button>
+  <Button on:click={createProduct}>Create product</Button>
 </section>
-
-<Product
-  productTitle={title}
-  productPrice={price}
-  productDescription={description}
-/>
+{#if products.length === 0}
+  <p>No products were added yet!</p>
+{:else}
+  {#each products as product}
+    <Product
+      productTitle={product.title}
+      productPrice={product.price}
+      productDescription={product.description}
+    />
+  {/each}
+{/if}
 
 <style>
   section {
